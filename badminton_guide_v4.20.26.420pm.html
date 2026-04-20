@@ -6,18 +6,37 @@
 <title>羽毛球训练指南</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif; background: #f5f4f0; color: #1a1a1a; padding: 20px; }
-.guide { max-width: 720px; margin: 0 auto; padding: 1.5rem 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif; background: #f5f4f0; color: #1a1a1a; min-height: 100vh; }
+.guide { max-width: 720px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+.main-header { background: #f5f4f0; padding: 1.5rem 1rem 0.5rem; max-width: 720px; margin: 0 auto; }
+.main-title { font-size: 20px; font-weight: 500; color: #1a1a1a; margin-bottom: 1rem; }
+.date-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 0.5rem; }
+.date-today { font-size: 12px; color: #aaa; }
+.date-next-row { display: flex; align-items: center; gap: 6px; }
+.date-next-label { font-size: 12px; color: #aaa; white-space: nowrap; }
+.date-next-input { font-size: 12px; font-family: inherit; color: #534AB7; background: #EEEDFE; border: 0.5px solid #AFA9EC; border-radius: 6px; padding: 3px 8px; width: 100px; }
+.date-next-input::placeholder { color: #c5c0e8; }
+.date-next-input:focus { outline: none; border-color: #7F77DD; }
+.save-btn-sm { font-size: 11px; font-family: inherit; padding: 4px 10px; border-radius: 6px; cursor: pointer; border: 0.5px solid #AFA9EC; background: #EEEDFE; color: #534AB7; }
+.save-btn-sm:active { opacity: 0.8; }
+.sync-status-sm { font-size: 11px; color: #aaa; }
+
+.content-area { background: #f5f4f0; padding: 0 1rem 3rem; }
+
 .section-title-live { font-size: 13px; font-weight: 500; color: #1a1a1a; margin-bottom: 10px; margin-top: 2rem; display: flex; align-items: center; gap: 8px; }
 .section-title-live:first-child { margin-top: 0; }
 .section-title-live .dot { width: 7px; height: 7px; border-radius: 50%; background: #7F77DD; flex-shrink: 0; }
 .section-title-ref { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; margin-bottom: 10px; margin-top: 2.5rem; }
 .divider { border: none; border-top: 1px dashed #d8d5cc; margin: 2.5rem 0 0; }
+
 .block { background: #fff; border: 0.5px solid #e0ddd5; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 10px; }
 .block-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .block-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .block-header-left { display: flex; align-items: center; gap: 10px; }
 .time-hint { font-size: 11px; color: #bbb; white-space: nowrap; }
+.block-title { font-size: 14px; font-weight: 500; color: #1a1a1a; }
+
 .badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 8px; white-space: nowrap; }
 .badge-teal   { background: #E1F5EE; color: #0F6E56; }
 .badge-purple { background: #EEEDFE; color: #534AB7; }
@@ -25,11 +44,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica
 .badge-blue   { background: #E6F1FB; color: #185FA5; }
 .badge-gray   { background: #F1EFE8; color: #5F5E5A; }
 .badge-coral  { background: #FAECE7; color: #993C1D; }
-.block-title { font-size: 14px; font-weight: 500; color: #1a1a1a; }
+
 .item-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
 .item-list li { font-size: 13px; color: #555; line-height: 1.5; padding-left: 14px; position: relative; }
 .item-list li::before { content: ''; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: #ccc; }
 .sub-label { font-size: 11px; font-weight: 500; color: #aaa; margin: 10px 0 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+
 .phase-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
 .phase-card { background: #fff; border: 0.5px solid #e0ddd5; border-radius: 12px; padding: 1rem 1.25rem; }
 .phase-card.accent-before { border-top: 2px solid #5DCAA5; }
@@ -40,31 +60,33 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica
 .during-label { color: #534AB7; }
 .after-label  { color: #854F0B; }
 .phase-desc { font-size: 13px; color: #666; line-height: 1.5; }
+
 .timeline { display: flex; margin-bottom: 10px; border-radius: 12px; overflow: hidden; border: 0.5px solid #e0ddd5; }
 .tl-seg { padding: 10px 12px; flex: 1; border-right: 0.5px solid #e0ddd5; }
 .tl-seg:last-child { border-right: none; }
 .tl-seg.seg-warm  { background: #E1F5EE; }
 .tl-seg.seg-feet  { background: #EEEDFE; }
 .tl-seg.seg-hand  { background: #E6F1FB; }
-.tl-seg.seg-combo { background: #FAEEDA; }
 .tl-time { font-size: 10px; font-weight: 500; margin-bottom: 2px; }
-.seg-warm  .tl-time { color: #0F6E56; }
-.seg-feet  .tl-time { color: #534AB7; }
-.seg-hand  .tl-time { color: #185FA5; }
-.seg-combo .tl-time { color: #854F0B; }
+.seg-warm .tl-time { color: #0F6E56; }
+.seg-feet .tl-time { color: #534AB7; }
+.seg-hand .tl-time { color: #185FA5; }
 .tl-name { font-size: 12px; font-weight: 500; color: #1a1a1a; }
 .tl-detail { font-size: 11px; color: #666; margin-top: 2px; line-height: 1.4; }
+
 .loop-row { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 6px; margin-top: 8px; }
 .loop-node { background: #f0ede6; border: 0.5px solid #e0ddd5; border-radius: 8px; padding: 8px 10px; text-align: center; font-size: 12px; font-weight: 500; color: #1a1a1a; }
 .loop-arrow { font-size: 14px; color: #bbb; text-align: center; }
 .note { font-size: 12px; color: #aaa; margin-top: 8px; padding-left: 4px; }
+
 .skill-group { margin-bottom: 10px; }
 .skill-group:last-child { margin-bottom: 0; }
 .skill-group-label { font-size: 11px; font-weight: 500; color: #aaa; margin-bottom: 5px; }
 .skill-tags { display: flex; flex-wrap: wrap; gap: 5px; }
 .tag { font-size: 12px; color: #bbb; background: #f5f4f0; border: 0.5px solid #e8e5de; border-radius: 8px; padding: 3px 9px; cursor: default; }
 .tag.learned { background: #EEEDFE; color: #534AB7; border-color: #AFA9EC; cursor: pointer; }
-.tag.learned:hover { background: #E0DEFF; }
+.tag.learned:active { background: #E0DEFF; }
+
 .drawer { display: none; background: #EEEDFE; border: 1px solid #AFA9EC; border-radius: 12px; padding: 1rem 1.25rem; margin-top: 10px; position: relative; }
 .drawer.open { display: block; }
 .drawer-title { font-size: 15px; font-weight: 500; margin-bottom: 3px; color: #1a1a1a; }
@@ -74,18 +96,47 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica
 .drawer-label { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #888; margin-bottom: 4px; }
 .drawer-text { font-size: 13px; color: #444; line-height: 1.65; }
 .drawer-close { position: absolute; top: 12px; right: 14px; font-size: 20px; color: #999; cursor: pointer; background: none; border: none; line-height: 1; padding: 4px; }
-textarea { width: 100%; min-height: 90px; font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif; color: #1a1a1a; background: #f5f4f0; border: 0.5px solid #d8d5cc; border-radius: 8px; padding: 10px 12px; resize: vertical; line-height: 1.6; }
-textarea:focus { outline: none; border-color: #aaa; }
+
+textarea { width: 100%; min-height: 90px; font-size: 13px; font-family: inherit; color: #1a1a1a; background: #f5f4f0; border: 0.5px solid #d8d5cc; border-radius: 8px; padding: 10px 12px; resize: vertical; line-height: 1.6; }
+textarea:focus { outline: none; border-color: #7F77DD; }
 textarea::placeholder { color: #ccc; font-style: italic; }
+
 .btn-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
 .save-btn { font-size: 12px; font-family: inherit; padding: 6px 16px; border-radius: 8px; cursor: pointer; border: 0.5px solid #AFA9EC; background: #EEEDFE; color: #534AB7; }
 .save-btn:active { transform: scale(0.98); }
 .sync-status { font-size: 12px; color: #aaa; }
 .sync-status.ok { color: #0F6E56; }
 .sync-status.err { color: #993C1D; }
+.save-time { font-size: 11px; color: #bbb; margin-top: 6px; }
+
+.history-section { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed #d8d5cc; }
+.history-toggle { font-size: 12px; font-weight: 500; color: #888; cursor: pointer; display: flex; align-items: center; gap: 6px; background: none; border: none; font-family: inherit; padding: 0; }
+.history-toggle:hover { color: #534AB7; }
+.history-arrow { font-size: 10px; transition: transform 0.2s; display: inline-block; }
+.history-arrow.open { transform: rotate(90deg); }
+.history-list { display: none; margin-top: 12px; flex-direction: column; gap: 8px; }
+.history-list.open { display: flex; }
+.history-item { background: #fff; border: 0.5px solid #e0ddd5; border-radius: 10px; padding: 10px 14px; border-left: 3px solid #7F77DD; }
+.history-item-meta { font-size: 11px; color: #aaa; margin-bottom: 4px; display: flex; gap: 8px; align-items: center; }
+.history-item-field { font-size: 11px; font-weight: 500; color: #534AB7; background: #EEEDFE; border-radius: 4px; padding: 1px 6px; }
+.history-item-text { font-size: 13px; color: #555; line-height: 1.5; white-space: pre-wrap; }
 </style>
 </head>
 <body>
+<div class="main-header">
+  <h1 class="main-title">豆豆的女高养成计划</h1>
+  <div class="date-bar">
+    <span class="date-today" id="date-today"></span>
+    <div class="date-next-row">
+      <span class="date-next-label">下次课：</span>
+      <input class="date-next-input" id="next-lesson-date" type="text" placeholder="如 4/24" />
+      <button class="save-btn-sm" onclick="saveField('nextdate')">保存</button>
+      <span class="sync-status-sm" id="nextdate-st"></span>
+    </div>
+  </div>
+  <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:4px;" id="nextdate-saved"></div>
+</div>
+<div class="content-area">
 <div class="guide">
 
 <div class="section-title-live"><span class="dot"></span>下次课计划</div>
@@ -99,6 +150,7 @@ textarea::placeholder { color: #ccc; font-style: italic; }
     <button class="save-btn" onclick="saveField('warmup')">保存</button>
     <span class="sync-status" id="warmup-st"></span>
   </div>
+  <div class="save-time" id="warmup-saved"></div>
 </div>
 <div class="block">
   <div class="block-header-row">
@@ -110,6 +162,7 @@ textarea::placeholder { color: #ccc; font-style: italic; }
     <button class="save-btn" onclick="saveField('footwork')">保存</button>
     <span class="sync-status" id="footwork-st"></span>
   </div>
+  <div class="save-time" id="footwork-saved"></div>
 </div>
 <div class="block">
   <div class="block-header-row">
@@ -121,16 +174,18 @@ textarea::placeholder { color: #ccc; font-style: italic; }
     <button class="save-btn" onclick="saveField('technique')">保存</button>
     <span class="sync-status" id="technique-st"></span>
   </div>
+  <div class="save-time" id="technique-saved"></div>
 </div>
 
 <div class="section-title-live"><span class="dot"></span>课后自评 · 本周</div>
 <div class="block">
-  <div class="block-header"><span class="badge badge-amber">自评</span><span class="block-title">课后填写</span></div>
+  <div class="block-header"><span class="badge badge-teal">自评</span><span class="block-title">课后填写</span></div>
   <textarea id="self-review" placeholder="今天练了什么？感觉如何？哪里还不顺？"></textarea>
   <div class="btn-row">
     <button class="save-btn" onclick="saveField('self')">保存</button>
     <span class="sync-status" id="self-st"></span>
   </div>
+  <div class="save-time" id="self-saved"></div>
 </div>
 
 <div class="section-title-live"><span class="dot"></span>教练评语 · 本周</div>
@@ -141,20 +196,25 @@ textarea::placeholder { color: #ccc; font-style: italic; }
     <button class="save-btn" onclick="saveField('coach')">保存</button>
     <span class="sync-status" id="coach-st"></span>
   </div>
+  <div class="save-time" id="coach-saved"></div>
 </div>
 
 <div class="section-title-live"><span class="dot"></span>课后练习计划 · 本周</div>
 <div class="block">
-  <div class="block-header"><span class="badge badge-teal">练习</span><span class="block-title">课后填写</span></div>
+  <div class="block-header"><span class="badge badge-amber">练习</span><span class="block-title">课后填写</span></div>
   <textarea id="practice-plan" placeholder="根据本次课纠正重点，写下本周课下练习目标..."></textarea>
   <div class="btn-row">
     <button class="save-btn" onclick="saveField('plan')">保存</button>
     <span class="sync-status" id="plan-st"></span>
   </div>
+  <div class="save-time" id="plan-saved"></div>
 </div>
 
 <hr class="divider">
 
+</div>
+
+<div class="guide">
 <div class="section-title-ref">总体节奏</div>
 <div class="phase-row">
   <div class="phase-card accent-before">
@@ -421,6 +481,14 @@ textarea::placeholder { color: #ccc; font-style: italic; }
   <div class="loop-node">课后复盘<br>定本周目标</div>
 </div>
 
+<div class="history-section">
+  <button class="history-toggle" onclick="toggleHistory()">
+    <span class="history-arrow" id="history-arrow">▶</span> 历史记录
+  </button>
+  <div class="history-list" id="history-list"></div>
+</div>
+
+</div>
 </div>
 
 <div id="drawer" class="drawer">
@@ -443,6 +511,7 @@ var BIN_ID = '69e68a1e856a6821895503c1';
 var BASE = 'https://api.jsonbin.io/v3';
 
 var FIELD_MAP = {
+  nextdate:  'next-lesson-date',
   warmup:    'plan-warmup',
   footwork:  'plan-footwork',
   technique: 'plan-technique',
@@ -451,7 +520,31 @@ var FIELD_MAP = {
   plan:      'practice-plan'
 };
 
+var FIELD_LABELS = {
+  nextdate:  '下次课日期',
+  warmup:    '热身计划',
+  footwork:  '步伐计划',
+  technique: '手法计划',
+  self:      '课后自评',
+  coach:     '教练评语',
+  plan:      '练习计划'
+};
+
+function formatDate(ts) {
+  var d = new Date(ts);
+  return (d.getMonth()+1) + '/' + d.getDate() + ' ' +
+    d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+}
+
+function setTodayDate() {
+  var d = new Date();
+  var days = ['日','一','二','三','四','五','六'];
+  document.getElementById('date-today').textContent =
+    '今天：' + (d.getMonth()+1) + '/' + d.getDate() + ' 周' + days[d.getDay()];
+}
+
 async function loadData() {
+  setTodayDate();
   try {
     var res = await fetch(BASE + '/b/' + BIN_ID + '/latest', {
       headers: { 'X-Master-Key': MASTER_KEY }
@@ -461,7 +554,38 @@ async function loadData() {
     Object.keys(FIELD_MAP).forEach(function(key) {
       if (d[key]) document.getElementById(FIELD_MAP[key]).value = d[key];
     });
+    if (d.saveTimes) {
+      Object.keys(d.saveTimes).forEach(function(key) {
+        var el = document.getElementById(key + '-saved');
+        if (el) el.textContent = '上次保存：' + formatDate(d.saveTimes[key]);
+      });
+    }
+    if (d.history) renderHistory(d.history);
   } catch(e) {}
+}
+
+function renderHistory(history) {
+  var list = document.getElementById('history-list');
+  list.innerHTML = '';
+  var sorted = history.slice().reverse();
+  sorted.forEach(function(item) {
+    var div = document.createElement('div');
+    div.className = 'history-item';
+    div.innerHTML =
+      '<div class="history-item-meta">' +
+        '<span>' + formatDate(item.ts) + '</span>' +
+        '<span class="history-item-field">' + (FIELD_LABELS[item.field] || item.field) + '</span>' +
+      '</div>' +
+      '<div class="history-item-text">' + item.text.replace(/</g,'&lt;') + '</div>';
+    list.appendChild(div);
+  });
+}
+
+function toggleHistory() {
+  var list = document.getElementById('history-list');
+  var arrow = document.getElementById('history-arrow');
+  list.classList.toggle('open');
+  arrow.classList.toggle('open');
 }
 
 async function saveField(field) {
@@ -473,14 +597,22 @@ async function saveField(field) {
     });
     var data = await res.json();
     var d = data.record || {};
-    d[field] = document.getElementById(FIELD_MAP[field]).value;
+    var val = document.getElementById(FIELD_MAP[field]).value;
+    d[field] = val;
+    if (!d.saveTimes) d.saveTimes = {};
+    d.saveTimes[field] = Date.now();
+    if (!d.history) d.history = [];
+    d.history.push({ ts: Date.now(), field: field, text: val });
     await fetch(BASE + '/b/' + BIN_ID, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'X-Master-Key': MASTER_KEY },
       body: JSON.stringify(d)
     });
-    st.textContent = '已保存并同步'; st.className = 'sync-status ok';
+    var savedEl = document.getElementById(field + '-saved');
+    if (savedEl) savedEl.textContent = '上次保存：' + formatDate(Date.now());
+    st.textContent = '已同步'; st.className = 'sync-status ok';
     setTimeout(function() { st.textContent = ''; }, 2500);
+    renderHistory(d.history);
   } catch(e) {
     st.textContent = '同步失败，请重试'; st.className = 'sync-status err';
   }
