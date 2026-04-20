@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>羽毛球训练指南</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif; background: #f5f4f0; color: #1a1a1a; padding: 20px; }
+.guide { max-width: 720px; margin: 0 auto; padding: 1.5rem 0; }
+.section-title-live { font-size: 13px; font-weight: 500; color: #1a1a1a; margin-bottom: 10px; margin-top: 2rem; display: flex; align-items: center; gap: 8px; }
+.section-title-live:first-child { margin-top: 0; }
+.section-title-live .dot { width: 7px; height: 7px; border-radius: 50%; background: #7F77DD; flex-shrink: 0; }
+.section-title-ref { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; margin-bottom: 10px; margin-top: 2.5rem; }
+.divider { border: none; border-top: 1px dashed #d8d5cc; margin: 2.5rem 0 0; }
+.block { background: #fff; border: 0.5px solid #e0ddd5; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 10px; }
+.block-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.block-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.block-header-left { display: flex; align-items: center; gap: 10px; }
+.time-hint { font-size: 11px; color: #bbb; white-space: nowrap; }
+.badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 8px; white-space: nowrap; }
+.badge-teal   { background: #E1F5EE; color: #0F6E56; }
+.badge-purple { background: #EEEDFE; color: #534AB7; }
+.badge-amber  { background: #FAEEDA; color: #854F0B; }
+.badge-blue   { background: #E6F1FB; color: #185FA5; }
+.badge-gray   { background: #F1EFE8; color: #5F5E5A; }
+.badge-coral  { background: #FAECE7; color: #993C1D; }
+.block-title { font-size: 14px; font-weight: 500; color: #1a1a1a; }
+.item-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.item-list li { font-size: 13px; color: #555; line-height: 1.5; padding-left: 14px; position: relative; }
+.item-list li::before { content: ''; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: #ccc; }
+.sub-label { font-size: 11px; font-weight: 500; color: #aaa; margin: 10px 0 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+.phase-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
+.phase-card { background: #fff; border: 0.5px solid #e0ddd5; border-radius: 12px; padding: 1rem 1.25rem; }
+.phase-card.accent-before { border-top: 2px solid #5DCAA5; }
+.phase-card.accent-during { border-top: 2px solid #7F77DD; }
+.phase-card.accent-after  { border-top: 2px solid #EF9F27; }
+.phase-label { font-size: 12px; font-weight: 500; margin-bottom: 4px; }
+.before-label { color: #0F6E56; }
+.during-label { color: #534AB7; }
+.after-label  { color: #854F0B; }
+.phase-desc { font-size: 13px; color: #666; line-height: 1.5; }
+.timeline { display: flex; margin-bottom: 10px; border-radius: 12px; overflow: hidden; border: 0.5px solid #e0ddd5; }
+.tl-seg { padding: 10px 12px; flex: 1; border-right: 0.5px solid #e0ddd5; }
+.tl-seg:last-child { border-right: none; }
+.tl-seg.seg-warm  { background: #E1F5EE; }
+.tl-seg.seg-feet  { background: #EEEDFE; }
+.tl-seg.seg-hand  { background: #E6F1FB; }
+.tl-seg.seg-combo { background: #FAEEDA; }
+.tl-time { font-size: 10px; font-weight: 500; margin-bottom: 2px; }
+.seg-warm  .tl-time { color: #0F6E56; }
+.seg-feet  .tl-time { color: #534AB7; }
+.seg-hand  .tl-time { color: #185FA5; }
+.seg-combo .tl-time { color: #854F0B; }
+.tl-name { font-size: 12px; font-weight: 500; color: #1a1a1a; }
+.tl-detail { font-size: 11px; color: #666; margin-top: 2px; line-height: 1.4; }
+.loop-row { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 6px; margin-top: 8px; }
+.loop-node { background: #f0ede6; border: 0.5px solid #e0ddd5; border-radius: 8px; padding: 8px 10px; text-align: center; font-size: 12px; font-weight: 500; color: #1a1a1a; }
+.loop-arrow { font-size: 14px; color: #bbb; text-align: center; }
+.note { font-size: 12px; color: #aaa; margin-top: 8px; padding-left: 4px; }
+.skill-group { margin-bottom: 10px; }
+.skill-group:last-child { margin-bottom: 0; }
+.skill-group-label { font-size: 11px; font-weight: 500; color: #aaa; margin-bottom: 5px; }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.tag { font-size: 12px; color: #bbb; background: #f5f4f0; border: 0.5px solid #e8e5de; border-radius: 8px; padding: 3px 9px; cursor: default; }
+.tag.learned { background: #EEEDFE; color: #534AB7; border-color: #AFA9EC; cursor: pointer; }
+.tag.learned:hover { background: #E0DEFF; }
+.drawer { display: none; background: #EEEDFE; border: 1px solid #AFA9EC; border-radius: 12px; padding: 1rem 1.25rem; margin-top: 10px; position: relative; }
+.drawer.open { display: block; }
+.drawer-title { font-size: 15px; font-weight: 500; margin-bottom: 3px; color: #1a1a1a; }
+.drawer-group { font-size: 11px; color: #888; margin-bottom: 12px; }
+.drawer-section { margin-bottom: 10px; }
+.drawer-section:last-child { margin-bottom: 0; }
+.drawer-label { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #888; margin-bottom: 4px; }
+.drawer-text { font-size: 13px; color: #444; line-height: 1.65; }
+.drawer-close { position: absolute; top: 12px; right: 14px; font-size: 20px; color: #999; cursor: pointer; background: none; border: none; line-height: 1; padding: 4px; }
+textarea { width: 100%; min-height: 90px; font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif; color: #1a1a1a; background: #f5f4f0; border: 0.5px solid #d8d5cc; border-radius: 8px; padding: 10px 12px; resize: vertical; line-height: 1.6; }
+textarea:focus { outline: none; border-color: #aaa; }
+textarea::placeholder { color: #ccc; font-style: italic; }
+.btn-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.save-btn { font-size: 12px; font-family: inherit; padding: 6px 16px; border-radius: 8px; cursor: pointer; border: 0.5px solid #AFA9EC; background: #EEEDFE; color: #534AB7; }
+.save-btn:active { transform: scale(0.98); }
+.sync-status { font-size: 12px; color: #aaa; }
+.sync-status.ok { color: #0F6E56; }
+.sync-status.err { color: #993C1D; }
+</style>
+</head>
+<body>
+<div class="guide">
+
+<div class="section-title-live"><span class="dot"></span>下次课计划</div>
+<div class="block">
+  <div class="block-header-row">
+    <div class="block-header-left"><span class="badge badge-teal">热身</span><span class="block-title">高吊杀</span></div>
+    <span class="time-hint">0–20 min（参考）</span>
+  </div>
+  <textarea id="plan-warmup" placeholder="今天热身的练习意识，例：高球体会核心带动，吊球熟悉球点..."></textarea>
+  <div class="btn-row">
+    <button class="save-btn" onclick="saveField('warmup')">保存</button>
+    <span class="sync-status" id="warmup-st"></span>
+  </div>
+</div>
+<div class="block">
+  <div class="block-header-row">
+    <div class="block-header-left"><span class="badge badge-purple">步伐</span></div>
+    <span class="time-hint">20–50 min（参考）</span>
+  </div>
+  <textarea id="plan-footwork" placeholder="本次课步伐重点，例：头顶直线（优先）、正手直线..."></textarea>
+  <div class="btn-row">
+    <button class="save-btn" onclick="saveField('footwork')">保存</button>
+    <span class="sync-status" id="footwork-st"></span>
+  </div>
+</div>
+<div class="block">
+  <div class="block-header-row">
+    <div class="block-header-left"><span class="badge badge-coral">手法</span></div>
+    <span class="time-hint">50–90 min（参考）</span>
+  </div>
+  <textarea id="plan-technique" placeholder="本次课手法重点，例：正手劈吊，先练原地再上移动版本..."></textarea>
+  <div class="btn-row">
+    <button class="save-btn" onclick="saveField('technique')">保存</button>
+    <span class="sync-status" id="technique-st"></span>
+  </div>
+</div>
+
+<div class="section-title-live"><span class="dot"></span>课后自评 · 本周</div>
+<div class="block">
+  <div class="block-header"><span class="badge badge-amber">自评</span><span class="block-title">课后填写</span></div>
+  <textarea id="self-review" placeholder="今天练了什么？感觉如何？哪里还不顺？"></textarea>
+  <div class="btn-row">
+    <button class="save-btn" onclick="saveField('self')">保存</button>
+    <span class="sync-status" id="self-st"></span>
+  </div>
+</div>
+
+<div class="section-title-live"><span class="dot"></span>教练评语 · 本周</div>
+<div class="block">
+  <div class="block-header"><span class="badge badge-blue">教练</span><span class="block-title">教练填写</span></div>
+  <textarea id="coach-review" placeholder="教练评语..."></textarea>
+  <div class="btn-row">
+    <button class="save-btn" onclick="saveField('coach')">保存</button>
+    <span class="sync-status" id="coach-st"></span>
+  </div>
+</div>
+
+<div class="section-title-live"><span class="dot"></span>课后练习计划 · 本周</div>
+<div class="block">
+  <div class="block-header"><span class="badge badge-teal">练习</span><span class="block-title">课后填写</span></div>
+  <textarea id="practice-plan" placeholder="根据本次课纠正重点，写下本周课下练习目标..."></textarea>
+  <div class="btn-row">
+    <button class="save-btn" onclick="saveField('plan')">保存</button>
+    <span class="sync-status" id="plan-st"></span>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section-title-ref">总体节奏</div>
+<div class="phase-row">
+  <div class="phase-card accent-before">
+    <div class="phase-label before-label">课前</div>
+    <div class="phase-desc">制定计划 · 篮球场步伐自练</div>
+  </div>
+  <div class="phase-card accent-during">
+    <div class="phase-label during-label">课上</div>
+    <div class="phase-desc">热身 → 步伐检查 → 手法 → 结合</div>
+  </div>
+  <div class="phase-card accent-after">
+    <div class="phase-label after-label">课后</div>
+    <div class="phase-desc">复盘 · 制定本周练习计划</div>
+  </div>
+</div>
+
+<div class="section-title-ref">课前准备</div>
+<div class="block">
+  <div class="block-header"><span class="badge badge-teal">上课当天</span><span class="block-title">篮球场步伐自练（30–45分钟）</span></div>
+  <ul class="item-list">
+    <li>用app随机指位，练六个角的启动与移动</li>
+    <li>重点感受：启动瞬间的蹬地、重心转换、每步落点</li>
+    <li>无标准场地也能练——步伐的核心是移动模式，不依赖白线</li>
+    <li>结束后做好热身，直接带着热的状态进课</li>
+  </ul>
+</div>
+<div class="block">
+  <div class="block-header"><span class="badge badge-purple">脑内预习清单</span></div>
+  <div class="sub-label">上节课的问题</div>
+  <ul class="item-list">
+    <li>上次教练指出的主要问题是什么？</li>
+    <li>课后自练时有没有感受到改善？还是依然卡壳？</li>
+  </ul>
+  <div class="sub-label">本节课的重点</div>
+  <ul class="item-list">
+    <li>步伐：今天想让教练检查哪个方向/哪个细节？</li>
+    <li>手法：这节课想重点练哪个动作？（选1–2个，不要贪多）</li>
+    <li>高吊杀热身：今天的练习意识是什么？（见本次课计划）</li>
+  </ul>
+</div>
+
+<div class="section-title-ref">课上时间安排（90分钟）</div>
+<div class="timeline">
+  <div class="tl-seg seg-warm">
+    <div class="tl-time">0–20分钟</div>
+    <div class="tl-name">热身</div>
+    <div class="tl-detail">对抗热身<br>高 / 吊 / 杀带意识练</div>
+  </div>
+  <div class="tl-seg seg-feet">
+    <div class="tl-time">20–50分钟</div>
+    <div class="tl-name">步伐检查</div>
+    <div class="tl-detail">教练纠错<br>上球验证<br>（随步伐进步可压缩）</div>
+  </div>
+  <div class="tl-seg seg-hand">
+    <div class="tl-time">50–90分钟</div>
+    <div class="tl-name">手法</div>
+    <div class="tl-detail">原地稳定<br>→ 移动版本<br>先夯实基础</div>
+  </div>
+</div>
+<div class="block">
+  <ul class="item-list">
+    <li>课前与教练沟通本次练习计划，根据实际进度随时调整，请教练配合把控节奏</li>
+    <li>手法从基础入手，原地稳了再练移动版本，不急于挑战难动作</li>
+    <li>步伐检查时间随课下练习进展动态压缩，省出时间给手法</li>
+  </ul>
+</div>
+
+<div class="section-title-ref">课后练习</div>
+<div class="block">
+  <div class="block-header"><span class="badge badge-amber">课后当天</span><span class="block-title">复盘 + 制定本周练习计划</span></div>
+  <ul class="item-list">
+    <li>今天教练重点纠正了什么？</li>
+    <li>哪个动作还没稳定下来，本周练习需要专项针对？</li>
+    <li>本周课下练习的1–2个核心目标是什么？</li>
+  </ul>
+</div>
+<div class="block">
+  <div class="block-header"><span class="badge badge-blue">周中打球 · 等场间歇</span><span class="block-title">步伐练习（~20–30分钟/次）</span></div>
+  <ul class="item-list">
+    <li>场地在厕所门前，一侧约1/4被遮挡，通常与人共用半场</li>
+    <li>常规情况：练前后场直线步伐</li>
+    <li>运气好独占全场时：加练斜线步伐，回球落点控制在对侧网前</li>
+    <li>有限场地已足够现阶段使用，重点在于每次都带着意识去练</li>
+    <li>打球时有意识地把课上学的手法带入实战，哪怕打双打</li>
+  </ul>
+  <p class="note">找球友配合时不需要固定搭档，每次找不同的人都可以</p>
+</div>
+<div class="block">
+  <div class="block-header"><span class="badge badge-teal">周末 · 单打约练</span><span class="block-title">球路 + 步伐专项（尽量每周一次）</span></div>
+  <ul class="item-list">
+    <li>优先约早上或下午早场，更容易确保场地和时间</li>
+    <li>不要只打实战对抗——专门留出时间做定点球路练习</li>
+    <li>每次练习围绕1–2个课上的步伐内容来设计球路，步伐和手法同时上</li>
+    <li>约不到时，把精力加在篮球场自练（课前）和等场间歇练习上</li>
+  </ul>
+</div>
+
+<div class="section-title-ref">步伐与手法总览</div>
+<p style="font-size: 12px; color: #bbb; margin-bottom: 12px;">紫色标签 = 已学过，点击查看当前进度</p>
+
+<div class="block">
+  <div class="block-header"><span class="badge badge-purple">步伐</span><span class="block-title">六个基础练习</span></div>
+  <div class="skill-tags">
+    <span class="tag learned" onclick="openModal('启动 / 移动 / 回动','步伐基础','启动时机判断不准，还没有建立观察对手的习惯，容易凭感觉出发。移动整体相对熟练，但交叉步、并步、垫步的使用场景不清晰，全凭直觉。回动范围的概念已理解，但执行不熟练——尤其是哪只脚落在回动圈边缘，缺乏肌肉记忆。','建立观察对手的启动习惯；区分各步型的使用场景；在步伐练习中专门强化回动落脚点。', this)">启动 / 移动 / 回动</span>
+    <span class="tag learned" onclick="openModal('四点步伐','步伐基础','头顶斜线、头顶直线、正手直线、正手斜线都练过，但之前缺乏与启动、回动的结合——启动只会纯跑，猜球后容易回动过头。','在步伐练习中加入启动预判和回动控制，不只练跑动本身。', this)">头顶斜线</span>
+    <span class="tag learned" onclick="openModal('四点步伐','步伐基础','头顶斜线、头顶直线、正手直线、正手斜线都练过，但之前缺乏与启动、回动的结合——启动只会纯跑，猜球后容易回动过头。','在步伐练习中加入启动预判和回动控制，不只练跑动本身。', this)">头顶直线</span>
+    <span class="tag learned" onclick="openModal('四点步伐','步伐基础','头顶斜线、头顶直线、正手直线、正手斜线都练过，但之前缺乏与启动、回动的结合——启动只会纯跑，猜球后容易回动过头。','在步伐练习中加入启动预判和回动控制，不只练跑动本身。', this)">正手直线</span>
+    <span class="tag learned" onclick="openModal('四点步伐','步伐基础','头顶斜线、头顶直线、正手直线、正手斜线都练过，但之前缺乏与启动、回动的结合——启动只会纯跑，猜球后容易回动过头。','在步伐练习中加入启动预判和回动控制，不只练跑动本身。', this)">正手斜线</span>
+    <span class="tag learned" onclick="openModal('网前两点 / 后场两点','步伐基础','都练过，同样缺乏与启动、回动的结合。','在步伐练习中加入启动预判和回动控制。', this)">网前两点</span>
+    <span class="tag learned" onclick="openModal('网前两点 / 后场两点','步伐基础','都练过，同样缺乏与启动、回动的结合。','在步伐练习中加入启动预判和回动控制。', this)">后场两点</span>
+  </div>
+  <div style="height: 10px;"></div>
+  <div class="skill-group-label">进阶步伐</div>
+  <div class="skill-tags">
+    <span class="tag learned" onclick="openModal('马来步','进阶步伐','已知道动作框架，偶尔能做出来。关键在于蹬地转髋那一下要有力，目前这个发力环节还不够稳定。','专项练习蹬地转髋的发力感，配合高远球或杀球练习中反复触发。', this)">马来步</span>
+    <span class="tag" onclick="">杀上网</span>
+    <span class="tag" onclick="">吊上网</span>
+    <span class="tag" onclick="">中国跳</span>
+  </div>
+</div>
+
+<div class="block">
+  <div class="block-header"><span class="badge badge-coral">后场手法</span></div>
+  <div class="skill-group">
+    <div class="skill-group-label">高远球</div>
+    <div class="skill-tags">
+      <span class="tag learned" onclick="openModal('高远球','后场手法 · 高远球','蹬转发力顺序有问题，目前正在学闪动，整体动作框架在调整中。','巩固蹬转发力顺序，配合闪动练习逐步稳定。', this)">高远球</span>
+      <span class="tag learned" onclick="openModal('直线高远球','后场手法 · 高远球','蹬转发力顺序有问题，目前正在学闪动，整体动作框架在调整中。','巩固蹬转发力顺序，配合闪动练习逐步稳定。', this)">直线高远球</span>
+      <span class="tag learned" onclick="openModal('斜线高远球','后场手法 · 高远球','蹬转发力顺序有问题，目前正在学闪动，整体动作框架在调整中。','巩固蹬转发力顺序，配合闪动练习逐步稳定。', this)">斜线高远球</span>
+      <span class="tag learned" onclick="openModal('直线平高球','后场手法 · 平高球','出球稳定性不足——有时高度不够被对方拦截，有时深度不够落点偏短。','固定击球点和发力节奏，先求稳定再求落点质量。', this)">直线平高球</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-group-label">吊球</div>
+    <div class="skill-tags">
+      <span class="tag learned" onclick="openModal('直线吊球','后场手法 · 吊球','稳定性不足，击球点不够固定，出球质量起伏较大。','固定击球点，先练出稳定的直线落点再考虑变化。', this)">吊球</span>
+      <span class="tag learned" onclick="openModal('直线吊球','后场手法 · 吊球','稳定性不足，击球点不够固定，出球质量起伏较大。','固定击球点，先练出稳定的直线落点再考虑变化。', this)">直线吊球</span>
+      <span class="tag learned" onclick="openModal('正手劈吊斜线','后场手法 · 吊球','使用频率很低，目前全凭手感，缺乏稳定的动作模式。','课上专项练习，建立固定的动作框架和击球点感知。', this)">正手劈吊斜线</span>
+      <span class="tag">正手滑板直线</span>
+      <span class="tag learned" onclick="openModal('头顶滑板对角','后场手法 · 吊球','被动使用时拍面过高，出球质量不稳定；主动使用时稳定性同样不足，被对方接回后难以连贯下一拍。','区分主被动场景的击球时机；加强接球后的连贯意识和衔接步伐。', this)">头顶滑板对角</span>
+      <span class="tag">头顶劈吊直线</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-group-label">杀球</div>
+    <div class="skill-tags">
+      <span class="tag learned" onclick="openModal('杀球','后场手法 · 杀球','发力顺序问题与高远球相同；主动杀球的击球点不够固定，影响稳定性和力量。','先解决发力顺序问题（与高远球同步推进），再专项固定击球点。', this)">原地杀球</span>
+      <span class="tag learned" onclick="openModal('杀球','后场手法 · 杀球','发力顺序问题与高远球相同；主动杀球的击球点不够固定，影响稳定性和力量。','先解决发力顺序问题（与高远球同步推进），再专项固定击球点。', this)">蹬转杀球</span>
+      <span class="tag">正手劈杀</span>
+      <span class="tag learned" onclick="openModal('头顶点杀 / 软压','后场手法 · 点杀与软压','均未经专门练习，实战中偶尔出现，动作不系统。','待基础杀球和高远球稳定后再安排专项练习。', this)">头顶点杀</span>
+      <span class="tag">头顶滑板杀</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-group-label">过渡 / 软压 / 抽球</div>
+    <div class="skill-tags">
+      <span class="tag learned" onclick="openModal('正手过渡直线','后场手法 · 过渡','动作框架不够固定，习惯抢高点，步伐不到位时过渡球质量偏软，缺乏威胁。','步伐到位是前提，先保证击球位置，再稳定出球质量。', this)">正手过渡直线</span>
+      <span class="tag learned" onclick="openModal('正手过渡斜线','后场手法 · 过渡','课上练过几次，实战中基本未使用——主要原因是步伐不到位，没有打出斜线的角度空间。','与步伐结合练习，步伐到位才有斜线的角度。', this)">正手过渡斜线</span>
+      <span class="tag learned" onclick="openModal('头顶点杀 / 软压','后场手法 · 点杀与软压','均未经专门练习，实战中偶尔出现，动作不系统。','待基础杀球和高远球稳定后再安排专项练习。', this)">软压</span>
+      <span class="tag learned" onclick="openModal('正手抽球','后场手法 · 抽球','使用频率低，双打中被迫抽球时击球点偏低，容易下网。','尽量在较高点完成抽球动作，提高对来球高度的提前判断。', this)">正手抽球</span>
+    </div>
+  </div>
+</div>
+
+<div class="block">
+  <div class="block-header"><span class="badge badge-teal">网前手法</span></div>
+  <div class="skill-group">
+    <div class="skill-group-label">挡网</div>
+    <div class="skill-tags">
+      <span class="tag learned" onclick="openModal('挡网','网前手法 · 挡网','练过一次。最大问题是反手挡网容易被对方扑球——目前只会挡直线，缺乏变线能力。','加强反手挡网的拍面控制，加入挡斜线的练习。', this)">挡网</span>
+      <span class="tag learned" onclick="openModal('挡近网','网前手法 · 挡网','练过一次。最大问题是反手挡网容易被对方扑球——目前只会挡直线，缺乏变线能力。','加强反手挡网的拍面控制，加入挡斜线的练习。', this)">挡近网</span>
+      <span class="tag learned" onclick="openModal('挡远网','网前手法 · 挡网','练过一次。最大问题是反手挡网容易被对方扑球——目前只会挡直线，缺乏变线能力。','加强反手挡网的拍面控制，加入挡斜线的练习。', this)">挡远网</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-group-label">搓球</div>
+    <div class="skill-tags">
+      <span class="tag learned" onclick="openModal('搓球','网前手法 · 搓球','课上练习时效果还可以，但实战中基本不使用——主要原因是抢不到合适的击球点。','加强网前步伐，保证在合理位置接到球，才能用上搓球。', this)">正手切搓</span>
+      <span class="tag learned" onclick="openModal('搓球','网前手法 · 搓球','课上练习时效果还可以，但实战中基本不使用——主要原因是抢不到合适的击球点。','加强网前步伐，保证在合理位置接到球，才能用上搓球。', this)">反手切搓</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-group-label">勾球</div>
+    <div class="skill-tags">
+      <span class="tag learned" onclick="openModal('勾对角','网前手法 · 勾球','以前经常使用，课上专门练习后意识到与标准动作还有差距，此后实战中反而停止使用了。','继续在练习中磨合标准动作，不要因为意识到问题就回避实战——刻意用才能进步。', this)">正手主动位勾球</span>
+      <span class="tag learned" onclick="openModal('勾对角','网前手法 · 勾球','以前经常使用，课上专门练习后意识到与标准动作还有差距，此后实战中反而停止使用了。','继续在练习中磨合标准动作，不要因为意识到问题就回避实战——刻意用才能进步。', this)">反手主动位勾球</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-group-label">推球 / 挑球</div>
+    <div class="skill-tags">
+      <span class="tag learned" onclick="openModal('推球','网前手法 · 推球','主要在接发球阶段使用，偶尔推出界，整体尚可但有提升空间。','控制发力幅度，固定推球落点，减少出界。', this)">推球</span>
+      <span class="tag learned" onclick="openModal('挑球','网前手法 · 挑球','最近双打打得多，挑球有明显进步，稳定性在提升中。','继续保持，实战中多积累。', this)">挑球</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-group-label">放网</div>
+    <div class="skill-tags">
+      <span class="tag learned" onclick="openModal('放网','网前手法 · 放网','比较依赖手感，偶尔出现持球（持拍时间过长）的情况，稳定性不够。','统一拍面触球方式，减少持球，让放网更干净。', this)">放网</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-group-label">接杀</div>
+    <div class="skill-tags">
+      <span class="tag learned" onclick="openModal('接杀','网前手法 · 接杀','未经专项练习。实战中多为正手接杀，习惯大力抡回去而非控制回球。反手接杀能碰到球但容易打飞。对接杀时的站位、步伐选择、防守重点区域目前没有系统认知。','需要专门安排课上练习，建立基本的接杀站位和步伐框架。正手接杀先练控制，反手接杀先解决击球稳定性。', this)">接杀</span>
+    </div>
+  </div>
+</div>
+
+<div class="block">
+  <div class="block-header"><span class="badge badge-blue">反手手法</span></div>
+  <div class="skill-group">
+    <div class="skill-group-label">过渡 / 抽球</div>
+    <div class="skill-tags">
+      <span class="tag">反手过渡直线</span>
+      <span class="tag">反手滑板直线</span>
+      <span class="tag">反手过渡斜线</span>
+      <span class="tag">反手抽球 / 硬过渡</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-group-label">高远 / 杀球</div>
+    <div class="skill-tags">
+      <span class="tag">反手直线高远</span>
+      <span class="tag">反手斜线高远</span>
+      <span class="tag">反手杀球</span>
+    </div>
+  </div>
+</div>
+
+<div class="block">
+  <div class="block-header"><span class="badge badge-gray">中场手法</span></div>
+  <div class="skill-tags">
+    <span class="tag learned" onclick="openModal('平抽挡','中场手法','稳定度和质量在当前阶段够用。主要问题：对方来球过高时无法有效下压；对方来球偏软时习惯伸手去够，而不是用步伐补位。','来球偏软时先动步伐再出手，培养用脚解决问题的意识。', this)">平抽挡</span>
+    <span class="tag">接追身球</span>
+    <span class="tag">中场拦截</span>
+  </div>
+</div>
+
+<div class="block">
+  <div class="block-header"><span class="badge badge-gray">发球</span></div>
+  <div class="skill-group">
+    <div class="skill-group-label">正手发球</div>
+    <div class="skill-tags">
+      <span class="tag learned" onclick="openModal('正手发球','发球','偶尔出界或方向失控，动作还不够模式化。在意识层面也尚未充分重视发球的战略价值。','建立固定的发球动作模板；在战术意识上重视发球的主动性。', this)">正手发高远</span>
+      <span class="tag learned" onclick="openModal('正手发球','发球','偶尔出界或方向失控，动作还不够模式化。在意识层面也尚未充分重视发球的战略价值。','建立固定的发球动作模板；在战术意识上重视发球的主动性。', this)">正手发小球</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-group-label">反手发球</div>
+    <div class="skill-tags">
+      <span class="tag learned" onclick="openModal('反手发小球','发球','整体稳定性不错，但落点单一，主要靠近中线，偶尔想发边线时稳定性明显下降。','在稳定中线发球的基础上，逐步扩展落点变化，专项练习发边线的稳定性。', this)">反手发小球</span>
+      <span class="tag learned" onclick="openModal('反手发后场','发球','偷后场发球成功率尚可，但最大问题是发完球后连贯下一拍的衔接不顺畅。','专项练习发球后的第一步移动，建立发球与衔接的连贯节奏。', this)">反手发后场</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-title-ref">闭环节奏</div>
+<div class="loop-row">
+  <div class="loop-node">课前预习<br>制定计划</div>
+  <div class="loop-arrow">→</div>
+  <div class="loop-node">课上执行<br>带意识练</div>
+  <div class="loop-arrow">→</div>
+  <div class="loop-node">课后复盘<br>定本周目标</div>
+</div>
+
+</div>
+
+<div id="drawer" class="drawer">
+  <button class="drawer-close" onclick="closeDrawer()">×</button>
+  <div class="drawer-title" id="drawer-title"></div>
+  <div class="drawer-group" id="drawer-group"></div>
+  <div class="drawer-section">
+    <div class="drawer-label">目前状况</div>
+    <div class="drawer-text" id="drawer-status"></div>
+  </div>
+  <div class="drawer-section">
+    <div class="drawer-label">下一步重点</div>
+    <div class="drawer-text" id="drawer-next"></div>
+  </div>
+</div>
+
+<script>
+var MASTER_KEY = '$2a$10$fB8sdpvS0i/lVy0wtnNDuusVHvsnj38H7hCfyHYyczVAt5msLLKD2';
+var BIN_ID = '69e68a1e856a6821895503c1';
+var BASE = 'https://api.jsonbin.io/v3';
+
+var FIELD_MAP = {
+  warmup:    'plan-warmup',
+  footwork:  'plan-footwork',
+  technique: 'plan-technique',
+  self:      'self-review',
+  coach:     'coach-review',
+  plan:      'practice-plan'
+};
+
+async function loadData() {
+  try {
+    var res = await fetch(BASE + '/b/' + BIN_ID + '/latest', {
+      headers: { 'X-Master-Key': MASTER_KEY }
+    });
+    var data = await res.json();
+    var d = data.record;
+    Object.keys(FIELD_MAP).forEach(function(key) {
+      if (d[key]) document.getElementById(FIELD_MAP[key]).value = d[key];
+    });
+  } catch(e) {}
+}
+
+async function saveField(field) {
+  var st = document.getElementById(field + '-st');
+  st.textContent = '保存中...'; st.className = 'sync-status';
+  try {
+    var res = await fetch(BASE + '/b/' + BIN_ID + '/latest', {
+      headers: { 'X-Master-Key': MASTER_KEY }
+    });
+    var data = await res.json();
+    var d = data.record || {};
+    d[field] = document.getElementById(FIELD_MAP[field]).value;
+    await fetch(BASE + '/b/' + BIN_ID, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'X-Master-Key': MASTER_KEY },
+      body: JSON.stringify(d)
+    });
+    st.textContent = '已保存并同步'; st.className = 'sync-status ok';
+    setTimeout(function() { st.textContent = ''; }, 2500);
+  } catch(e) {
+    st.textContent = '同步失败，请重试'; st.className = 'sync-status err';
+  }
+}
+
+var lastTag = null;
+function openModal(title, group, status, next, tagEl) {
+  var drawer = document.getElementById('drawer');
+  if (lastTag && lastTag === tagEl && drawer.classList.contains('open')) {
+    closeDrawer(); return;
+  }
+  document.getElementById('drawer-title').textContent = title;
+  document.getElementById('drawer-group').textContent = group;
+  document.getElementById('drawer-status').textContent = status;
+  document.getElementById('drawer-next').textContent = next;
+  var container = tagEl.closest('.block');
+  container.appendChild(drawer);
+  drawer.classList.add('open');
+  lastTag = tagEl;
+  setTimeout(function(){ drawer.scrollIntoView({behavior:'smooth', block:'nearest'}); }, 50);
+}
+function closeDrawer() {
+  document.getElementById('drawer').classList.remove('open');
+  lastTag = null;
+}
+
+loadData();
+</script>
+</body>
+</html>
